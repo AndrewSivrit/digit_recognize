@@ -1,4 +1,4 @@
-__author__ = 'Artgor'
+__author__ = 'AndrewSivrit'
 from codecs import open
 import os
 import uuid
