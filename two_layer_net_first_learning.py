@@ -1,6 +1,6 @@
 import numpy as np
 
-class TwoLayerNet(object):
+class FNN(object):
 	"""
 	A two-layer fully-connected neural network. The net has an
         input dimension of N, a hidden layer dimension of H, and
@@ -15,7 +15,7 @@ class TwoLayerNet(object):
         scores for each class.
 	"""
 
-	def __init__(self, input_size, hidden_size, output_size, std):
+	def __init__(self, input_size, hidden_size, output_size):
 		"""
 		Initialize the model. Weights are initialized following Xavier
 		intialization and biases are initialized to zero. Weights and
@@ -37,7 +37,7 @@ class TwoLayerNet(object):
 		self.params['W2'] = (((2 / hidden_size) ** 0.5) *
                                        np.random.randn(hidden_size, output_size))
 		self.params['b2'] = np.zeros(output_size)
-
+       
 	def loss(self, X, y=None, reg=0.0):
 		"""
 		Compute the loss and gradients for a two layer fully
@@ -119,7 +119,7 @@ class TwoLayerNet(object):
 		loss_history = []
 		train_acc_history = []
 		val_acc_history = []
-
+      
 		# Training cycle
 		for it in range(num_iters):
 			# Mini-batch selection
@@ -152,7 +152,7 @@ class TwoLayerNet(object):
 
 				# Decay learning rate
 				learning_rate *= learning_rate_decay
-
+       
 		return {
 		  'loss_history': loss_history,
 		  'train_acc_history': train_acc_history,
