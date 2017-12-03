@@ -20,17 +20,17 @@ CORS(app, headers=['Content-Type'])
 def index_page():
 	return render_template('index.html')
 	
-# @app.route("/about")
-# def about():
-# 	return render_template('about.html')
+@app.route("/about")
+def about():
+	return render_template('about.html')
 	
-# @app.route("/internals")
-# def internals():
-# 	return render_template('internals.html')
+@app.route("/internals")
+def internals():
+	return render_template('internals.html')
 	
-# @app.route("/models")
-# def models():
-# 	return render_template('models.html')
+@app.route("/models")
+def models():
+	return render_template('models.html')
 
 @app.route('/hook2', methods = ["GET", "POST", 'OPTIONS'])
 def predict():
