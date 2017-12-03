@@ -274,6 +274,7 @@ function nothing() {
 }
 
 function predict() {
+	document.getElementById("rec_result").innerHTML = "Predicting...";
 	document.getElementById("digit_form").style.display = "none";	
 	document.getElementById("hidable").style.display = "none";
 	document.getElementById("fnn1").style.color = 'gray';
@@ -288,7 +289,6 @@ function predict() {
 	document.getElementById("cnn_t1").style.color = 'gray';
 	document.getElementById("cnn_t2").style.color = 'gray';
 	document.getElementById("cnn_t3").style.color = 'gray';*/
-	document.getElementById("rec_result").innerHTML = "Predicting...";
 	document.getElementById("prediction").style.display = "none";
 
 	if (document.getElementById("hide_show_btn").innerHTML == 'Hide info') {
