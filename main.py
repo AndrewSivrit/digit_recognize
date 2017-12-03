@@ -37,7 +37,6 @@ def predict():
 	"""
 	Decodes image and uses it to make prediction.
 	"""
-	return "Can't predict, when nothing is drawn"
 	if request.method == 'POST':
 		image_b64 = request.values['imageBase64']
 		image_encoded = image_b64.split(',')[1]
