@@ -1,16 +1,17 @@
 import numpy as np
 
-class ClassName(object):
+class FNN(object):
 	"""
-	Двухслойная full-connected нейронная сеть. Сеть имеет входной размер N
-	скрытый слой размером H и выполняет классификацию C классов.
-	Я обучал сеть с функцией потери softmax и L2 регуляризации на метриках весов. 
-	Сеть имеет ReLU функцией активации после первого full-connected слоя
-
+	A two-layer fully-connected neural network. The net has an input dimension of
+	N, a hidden layer dimension of H, and performs classification over C classes.
+	We train the network with a softmax loss function and L2 regularization on the
+	weight matrices. The network uses a ReLU nonlinearity after the first fully
+	connected layer.
+	In other words, the network has the following architecture:
 	input - fully connected layer - ReLU - fully connected layer - softmax
-
-	Кол-во выходов второго fully-connected слоя равно кол-ву классов.
+	The outputs of the second fully-connected layer are the scores for each class.
 	"""
+
 	def __init__(self, weights, input_size=28*28, hidden_size=100, output_size=10):
 		"""
 		Initialize the model. Weights are passed into the class. Weights and biases are stored in the
@@ -29,7 +30,7 @@ class ClassName(object):
 		self.params['b1'] = weights['b1']
 		self.params['W2'] = weights['W2']
 		self.params['b2'] = weights['b2']
-		
+
 	def loss(self, X, y, reg=0.0):
 		"""
 		Compute the loss and gradients for a two layer fully connected neural
