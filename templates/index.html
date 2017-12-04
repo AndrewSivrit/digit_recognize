@@ -143,16 +143,55 @@
 
         <div class="row">
             <div class="col-md-4">
+                <h2>About the app</h2>
+                <p>This app can recognize handwritten digits. Draw a digit on the canvas above and press the "Recognize" button to see a prediction. Press the "Clear" button to clear the canvas and draw a digit again. "Show more information" button reveals detailed predictions by all models.</p>
             </div>
             <div class="col-md-4">
+                <h2>Collecting the data</h2>
+                <p>The drawn image is saved to amazon s3, perform</p><br>
+                
             </div>
             <div class="col-md-4">
+                <h2>Models performance</h2>
+                <table class="table">
+					<thead>
+						<tr>
+							<th>Model</th>
+							<th>MNIST accuracy</th>
+							<th>Worst predicted digit</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>FNN</td>
+							<td id="fnn_mnist">58.95%</td>
+							<td id="fnn_bad_digit">9 (14.57%)</td>
+						</tr>
+						<tr>
+							<td>Trained FNN</td>
+							<td id="fnn_t_mnist">62.13%</td>
+							<td id="fnn_t_bad_digit">9 (14.37%)</td>
+						</tr>
+						<!-- <tr>
+							<td>TF CNN</td>
+							<td id="cnn_mnist">74.69%</td>
+							<td id="cnn_bad_digit">7 (25.97%)</td>
+						</tr>
+						<tr>
+							<td>TF CNN trained</td>
+							<td id="cnn_t_mnist">74.27%</td>
+							<td id="cnn_t_bad_digit">9 (29.44%)</td>
+						</tr> -->
+						
+					</tbody>
+				</table>
             </div>
         </div>
 
         <footer>
             <div class="row">
                 <div class="col-lg-12">
+                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-recognize">Github</a></p>
                 </div>
             </div>
         </footer>
