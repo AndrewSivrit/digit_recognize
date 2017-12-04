@@ -216,7 +216,7 @@ function clearCanvas() {
     document.getElementById("hidable").style.display = "none";
 	document.getElementById("digit_form").style.display = "none";
     document.getElementById("answer_reaction").innerHTML = "";
-    document.getElementById("rec_result").innerHTML = "";
+    document.getElementById("rec_result").innerHTML = "dffddf";
 	document.getElementById("fnn1").style.color = 'gray';
 	document.getElementById("fnn2").style.color = 'gray';
 	document.getElementById("fnn3").style.color = 'gray';
