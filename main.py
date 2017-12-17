@@ -18,7 +18,7 @@ CORS(app, headers=['Content-Type'])
 
 @app.route("/", methods=["POST", "GET", 'OPTIONS'])
 def index_page():
-	return render_template('index.html')
+	return render_template('templates/index.html')
 	
 # @app.route("/about")
 # def about():
