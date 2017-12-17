@@ -223,12 +223,12 @@ function clearCanvas() {
 	document.getElementById("fnn_t1").style.color = 'gray';
 	document.getElementById("fnn_t2").style.color = 'gray';
 	document.getElementById("fnn_t3").style.color = 'gray';
-	/*document.getElementById("cnn1").style.color = 'gray';
+	document.getElementById("cnn1").style.color = 'gray';
 	document.getElementById("cnn2").style.color = 'gray';
 	document.getElementById("cnn3").style.color = 'gray';
 	document.getElementById("cnn_t1").style.color = 'gray';
 	document.getElementById("cnn_t2").style.color = 'gray';
-	document.getElementById("cnn_t3").style.color = 'gray';*/
+	document.getElementById("cnn_t3").style.color = 'gray';
 }
 
 //button events
@@ -246,35 +246,34 @@ function hide_show() {
 
 function positive_pred() {
 	if (document.getElementById("Checkbox").checked == true) {
-		document.getElementById("answer_reaction").innerHTML = "Great! Thank you.";
+		document.getElementById("answer_reaction").innerHTML = "Great! Thank you, the digit will be used to improve the models further.";
 		document.getElementById("prediction").style.display = "none";
 		var digit = document.getElementById("rec_result").innerHTML;
 		var trained = train_model(digit);
 		console.log(trained)
 	} else {
-		document.getElementById("answer_reaction").innerHTML = "...";
+		document.getElementById("answer_reaction").innerHTML = "Cool! The app works, but you could help improving it by checking the box next time.";
 		document.getElementById("prediction").style.display = "none";
 	}
 }
 
 function negative_pred() {
 	if (document.getElementById("Checkbox").checked == true) {
-		document.getElementById("answer_reaction").innerHTML = "choose the correct number and submit it?";
+		document.getElementById("answer_reaction").innerHTML = "This was an error! Could you please choose the correct number and submit it?";
 		document.getElementById("prediction").style.display = "none";
 		document.getElementById("digit_form").style.display = "block";	
 	} else {
-		document.getElementById("answer_reaction").innerHTML = "...";
+		document.getElementById("answer_reaction").innerHTML = "A pity :( If only the models could use this image to correct the error...";
 		document.getElementById("prediction").style.display = "none";
 	}
 }
 
 function nothing() {
 	document.getElementById("prediction").style.display = "none";
-	document.getElementById("answer_reaction").innerHTML = "... You neet to draw digit)";
+	document.getElementById("answer_reaction").innerHTML = "Well, the models on this site can recognize only digits... But you can draw anything, if you like :)";
 }
 
 function predict() {
-	document.getElementById("rec_result").innerHTML = "Predicting..";
 	document.getElementById("digit_form").style.display = "none";	
 	document.getElementById("hidable").style.display = "none";
 	document.getElementById("fnn1").style.color = 'gray';
@@ -283,12 +282,13 @@ function predict() {
 	document.getElementById("fnn_t1").style.color = 'gray';
 	document.getElementById("fnn_t2").style.color = 'gray';
 	document.getElementById("fnn_t3").style.color = 'gray';
-	/*document.getElementById("cnn1").style.color = 'gray';
+	document.getElementById("cnn1").style.color = 'gray';
 	document.getElementById("cnn2").style.color = 'gray';
 	document.getElementById("cnn3").style.color = 'gray';
 	document.getElementById("cnn_t1").style.color = 'gray';
 	document.getElementById("cnn_t2").style.color = 'gray';
-	document.getElementById("cnn_t3").style.color = 'gray';*/
+	document.getElementById("cnn_t3").style.color = 'gray';
+	document.getElementById("rec_result").innerHTML = "Predicting...";
 	document.getElementById("prediction").style.display = "none";
 
 	if (document.getElementById("hide_show_btn").innerHTML == 'Hide info') {
@@ -327,12 +327,12 @@ function predict() {
 			document.getElementById("fnn_t1").style.color = 'black';
 			document.getElementById("fnn_t2").style.color = 'black';
 			document.getElementById("fnn_t3").style.color = 'black';
-			/*document.getElementById("cnn1").style.color = 'black';
+			document.getElementById("cnn1").style.color = 'black';
 			document.getElementById("cnn2").style.color = 'black';
 			document.getElementById("cnn3").style.color = 'black';
 			document.getElementById("cnn_t1").style.color = 'black';
 			document.getElementById("cnn_t2").style.color = 'black';
-			document.getElementById("cnn_t3").style.color = 'black';*/
+			document.getElementById("cnn_t3").style.color = 'black';
 			
 			document.getElementById("fnn1").innerHTML = response['fnn'][0];
 			document.getElementById("fnn2").innerHTML = response['fnn'][1];
@@ -340,12 +340,12 @@ function predict() {
 			document.getElementById("fnn_t1").innerHTML = response['fnn_t'][0];
 			document.getElementById("fnn_t2").innerHTML = response['fnn_t'][1];
 			document.getElementById("fnn_t3").innerHTML = response['fnn_t'][2];
-			/*document.getElementById("cnn1").innerHTML = response['cnn'][0];
+			document.getElementById("cnn1").innerHTML = response['cnn'][0];
 			document.getElementById("cnn2").innerHTML = response['cnn'][1];
 			document.getElementById("cnn3").innerHTML = response['cnn'][2];
 			document.getElementById("cnn_t1").innerHTML = response['cnn_t'][0];
 			document.getElementById("cnn_t2").innerHTML = response['cnn_t'][1];
-			document.getElementById("cnn_t3").innerHTML = response['cnn_t'][2];	*/
+			document.getElementById("cnn_t3").innerHTML = response['cnn_t'][2];	
 			document.getElementById("rec_result").innerHTML = response["answer"];
 		}
 	});
@@ -356,7 +356,7 @@ function submit_correct_digit()
 	var digit = document.getElementById("digits");
 	var correct_digit = digit.options[digit.selectedIndex].text
 	document.getElementById("digit_form").style.display = "none";
-	document.getElementById("answer_reaction").innerHTML = "Thank you! ";
+	document.getElementById("answer_reaction").innerHTML = "Thank you! The models should work better now.";
 	
 	var trained = train_model(correct_digit);
 	console.log(trained)
