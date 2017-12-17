@@ -16,6 +16,7 @@ from scipy.ndimage.interpolation import rotate, shift
 from skimage import transform
 
 from two_layer_net import FNN
+from conv_net import CNN
 
 # =============================================================================
 # 
@@ -184,18 +185,18 @@ class Model(object):
 			return "Can't predict, when nothing is drawn"
 		net = FNN(self.params)
 		net_original = FNN(self.params_original)
-#		cnn = CNN()
-#		cnn_original = CNN()
+		cnn = CNN()
+		cnn_original = CNN()
 		
 		top_3 = net.predict_single(img_array)
 		top_3_original = net_original.predict_single(img_array)
-#		top_3_cnn = cnn.predict(img_array, weights='updated')
-#		top_3_cnn_original = cnn_original.predict(img_array, weights='original')
-#        answer, top_3, top_3_original, top_3_cnn, top_3_cnn_original = self.select_answer(top_3, top_3_original, top_3_cnn, top_3_cnn_original)
-		answer, top_3, top_3_original = self.select_answer(top_3, top_3_original)
+		top_3_cnn = cnn.predict(img_array, weights='updated')
+		top_3_cnn_original = cnn_original.predict(img_array, weights='original')
+        answer, top_3, top_3_original, top_3_cnn, top_3_cnn_original = self.select_answer(top_3, top_3_original, top_3_cnn, top_3_cnn_original)
+#		answer, top_3, top_3_original = self.select_answer(top_3, top_3_original)
 		
-		answers_dict = {'answer': str(answer), 'fnn_t': top_3, 'fnn': top_3_original}
-#        answers_dict = {'answer': str(answer), 'fnn_t': top_3, 'fnn': top_3_original, 'cnn_t': top_3_cnn, 'cnn': top_3_cnn_original}
+		# answers_dict = {'answer': str(answer), 'fnn_t': top_3, 'fnn': top_3_original}
+       answers_dict = {'answer': str(answer), 'fnn_t': top_3, 'fnn': top_3_original, 'cnn_t': top_3_cnn, 'cnn': top_3_cnn_original}
 		#return answer, top_3, top_3_original
 		return answers_dict
 		
@@ -208,14 +209,14 @@ class Model(object):
 		net = FNN(self.params)
 		X, y = self.augment(image, digit)
 		net.train(X, y)
-#		cnn = CNN()
-#		cnn.train(X, y)
+		cnn = CNN()
+		cnn.train(X, y)
 		np.save('tmp/updated_weights.npy', net.params)
 		response = self.save_weights_amazon('updated_weights.npy', './tmp/updated_weights.npy')
 		
-#		response = self.save_weights_amazon('data-all_2_updated.chkp.meta', './tmp/data-all_2_updated.chkp')
-#		response = self.save_weights_amazon('data-all_2_updated.chkp.index', './tmp/data-all_2_updated.chkp')
-#		response = self.save_weights_amazon('data-all_2_updated.chkp.data-00000-of-00001', './tmp/data-all_2_updated.chkp')
+		response = self.save_weights_amazon('data-all_2_updated.chkp.meta', './tmp/data-all_2_updated.chkp')
+		response = self.save_weights_amazon('data-all_2_updated.chkp.index', './tmp/data-all_2_updated.chkp')
+		response = self.save_weights_amazon('data-all_2_updated.chkp.data-00000-of-00001', './tmp/data-all_2_updated.chkp')
 		
 		return response
 	
@@ -226,21 +227,19 @@ class Model(object):
 		answer = ''
 		
         
-		if int(top_3[0][0]) == int(top_3[0][0]):
+		if int(top_3[0][0]) == int(top_3_cnn[0][0]):
 			answer = str(top_3[0][0])
-		elif int(top_3[0][1]) < 50 and int(top_3[0][1]) < 50:
+		elif int(top_3[0][1]) < 50 and int(top_3_cnn[0][1]) < 50:
 			answer = "Can't recognize this as a digit"
-		elif int(top_3[0][0]) != int(top_3[0][0]):
-			if int(top_3[0][1]) > int(top_3[0][1]):
+		elif int(top_3[0][0]) != int(top_3_cnn[0][0]):
+			if int(top_3[0][1]) > int(top_3_cnn[0][1]):
 				answer = str(top_3[0][0])
 			else:
-				answer = str(top_3[0][0])
-                
+				answer = str(top_3_cnn[0][0])
 		
 		top_3 = ['{0} ({1})%'.format(i[0], i[1]) for i in top_3]
 		top_3_original = ['{0} ({1})%'.format(i[0], i[1]) for i in top_3_original]
-        
-#		top_3_cnn = ['{} ({:2.4})%'.format(i[0], i[1]) for i in top_3_cnn]
-#		top_3_cnn_original = ['{} ({:2.4})%'.format(i[0], i[1]) for i in top_3_cnn_original]
-		return answer, top_3, top_3_original
-#		return answer, top_3, top_3_original, top_3_cnn, top_3_cnn_original
+		top_3_cnn = ['{} ({:2.4})%'.format(i[0], i[1]) for i in top_3_cnn]
+		top_3_cnn_original = ['{} ({:2.4})%'.format(i[0], i[1]) for i in top_3_cnn_original]
+		
+		return answer, top_3, top_3_original, top_3_cnn, top_3_cnn_original
