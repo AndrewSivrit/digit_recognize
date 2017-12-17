@@ -95,11 +95,11 @@ class CNN(object):
 		else:
 			f = 'data-all_2_updated.chkp'
 		fn = f + '.meta'
-		s3.download_file('digit_draw_recognize', fn, os.path.join('tmp/', fn))
+		s3.download_file('nikitinandrews', fn, os.path.join('tmp/', fn))
 		fn = f + '.index'
-		s3.download_file('digit_draw_recognize', fn, os.path.join('tmp/', fn))
+		s3.download_file('nikitinandrews', fn, os.path.join('tmp/', fn))
 		fn = f + '.data-00000-of-00001'
-		s3.download_file('digit_draw_recognize', fn, os.path.join('tmp/', fn))
+		s3.download_file('nikitinandrews', fn, os.path.join('tmp/', fn))
 		tf.reset_default_graph()
 		init_op = tf.global_variables_initializer()
 		sess = tf.Session()
