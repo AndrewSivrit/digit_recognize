@@ -29,30 +29,30 @@ class CNN(object):
 		  X[i] has label c, where 0 <= c < C.
 		"""
 
-		tf.reset_default_graph()								# Очищает стек графа по умолчанию и сбрасывает глобальный график по умолчанию.
-		init_op = tf.global_variables_initializer()				# Возвращает init_op, который инициализирует глобальные переменные
+		tf.reset_default_graph()
+		init_op = tf.global_variables_initializer()
 
-		X = tf.placeholder("float", [None, 28, 28, 1])			# узел, через который в модель будут передаваться новые данные (в данный момент это данные изображение размером 28*28*1)
-		Y = tf.placeholder("float", [None, 10])					# узел, через который в модель будут передаваться новые данные (ожидаемые выходные данные(10 шт))
+		X = tf.placeholder("float", [None, 28, 28, 1])
+		Y = tf.placeholder("float", [None, 10])
 
-		w = tf.get_variable("w", shape=[4, 4, 1, 16], initializer=tf.contrib.layers.xavier_initializer())	# переменная(массив) с параметрами (4*4*1*16) инициализатор «Xavier» для весов.
-		b1 = tf.get_variable(name="b1", shape=[16], initializer=tf.zeros_initializer())				# переменная(массив) с параметрами (16) Инициализатор, который генерирует тензоры, инициализированные 0.
+		w = tf.get_variable("w", shape=[4, 4, 1, 16], initializer=tf.contrib.layers.xavier_initializer())
+		b1 = tf.get_variable(name="b1", shape=[16], initializer=tf.zeros_initializer())
 		
-		w3 = tf.get_variable("w3", shape=[4, 4, 16, 32], initializer=tf.contrib.layers.xavier_initializer()) # переменная(массив) с параметрами (4*4*16*32) инициализатор «Xavier» для весов.
-		b3 = tf.get_variable(name="b3", shape=[32], initializer=tf.zeros_initializer())				# переменная(массив) с параметрами (32) Инициализатор, который генерирует тензоры, инициализированные 0.
+		w3 = tf.get_variable("w3", shape=[4, 4, 16, 32], initializer=tf.contrib.layers.xavier_initializer())
+		b3 = tf.get_variable(name="b3", shape=[32], initializer=tf.zeros_initializer())
 		
-		w4 = tf.get_variable("w4", shape=[32 * 7 * 7, 625], initializer=tf.contrib.layers.xavier_initializer()) # переменная(массив) с параметрами (32*7*7*625) инициализатор «Xavier» для весов.
-		b4 = tf.get_variable(name="b4", shape=[625], initializer=tf.zeros_initializer())			# переменная(массив) с параметрами (625) Инициализатор, который генерирует тензоры, инициализированные 0.
+		w4 = tf.get_variable("w4", shape=[32 * 7 * 7, 625], initializer=tf.contrib.layers.xavier_initializer())
+		b4 = tf.get_variable(name="b4", shape=[625], initializer=tf.zeros_initializer())
 		
-		w_o = tf.get_variable("w_o", shape=[625, 10], initializer=tf.contrib.layers.xavier_initializer())	# переменная(массив) с параметрами (625) инициализатор «Xavier» для весов.
-		b5 = tf.get_variable(name="b5", shape=[10], initializer=tf.zeros_initializer())				# переменная(массив) с параметрами (10) Инициализатор, который генерирует тензоры, инициализированные 0.
+		w_o = tf.get_variable("w_o", shape=[625, 10], initializer=tf.contrib.layers.xavier_initializer())
+		b5 = tf.get_variable(name="b5", shape=[10], initializer=tf.zeros_initializer())
 		
-		p_keep_conv = tf.placeholder("float")					# создаем узел типа float  
-		p_keep_hidden = tf.placeholder("float")					# создаем узел типа float 
+		p_keep_conv = tf.placeholder("float")
+		p_keep_hidden = tf.placeholder("float")
 		
 		l1a = tf.nn.relu(tf.nn.conv2d(X, w, strides=[1, 1, 1, 1], padding='SAME') + b1)
 		l1 = tf.nn.max_pool(l1a, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
-		l1 = tf.nn.dropout(l1, p_keep_conv)						# «отбрасывание» определенного процента нейронов для борьбы с переобучением
+		l1 = tf.nn.dropout(l1, p_keep_conv)
 
 		l3a = tf.nn.relu(tf.nn.conv2d(l1, w3, strides=[1, 1, 1, 1], padding='SAME') + b3)
 		l3 = tf.nn.max_pool(l3a, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
@@ -72,7 +72,7 @@ class CNN(object):
 
 		train_op = tf.train.RMSPropOptimizer(0.00001).minimize(cost)
 		predict_op = tf.argmax(py_x, 1)
-
+		
 		with tf.Session() as sess:
 			saver = tf.train.Saver()
 			saver.restore(sess, "./tmp/data-all_2_updated.chkp")
