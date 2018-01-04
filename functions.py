@@ -218,7 +218,7 @@ class Model(object):
 		
 		return response
 	
-	def select_answer(self, top_3, top_3_original):
+	def select_answer(self, top_3, top_3_original, top_3_cnn, top_3_cnn_original):
 		"""
 		Selects best answer from all. In fact only from the trained models, as they are considered to be better than untrained.
 		"""
