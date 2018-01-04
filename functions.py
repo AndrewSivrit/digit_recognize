@@ -18,34 +18,6 @@ from skimage import transform
 from two_layer_net import FNN
 from conv_net import CNN
 
-# =============================================================================
-# 
-# class Model(object):
-# 	def __init__(self):
-# 		#self.model = joblib.load()
-# 		self.nothing = 0
-# 
-# 	def save_image(self, drawn_digit, image):
-# 		filename = 'digit' + str(drawn_digit) + '__' + str(uuid.uuid1()) + '.jpg'
-# 		with open('tmp/' + filename, 'wb') as f:
-# 			f.write(image)
-# 			
-# 		print('Image written')
-# 		
-# 		REGION_HOST = 's3-external-1.amazonaws.com'
-# 		conn = S3Connection(os.environ['AWSAccessKeyId'], os.environ['AWSSecretKey'], host=REGION_HOST)
-# 		bucket = conn.get_bucket('nikitinandrews')
-# 		
-# 		k = Key(bucket)
-# 		fn = 'tmp/' + filename
-# 		k.key = filename
-# 		k.set_contents_from_filename(fn)
-# 		print('Done')
-# 
-# 		return ('Image saved successfully with the name {0}'.format(filename))
-# =============================================================================
-    
-    
 class Model(object):
 	def __init__(self):
 		"""
