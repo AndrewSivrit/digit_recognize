@@ -16,7 +16,7 @@ app = Flask(__name__)
 model = Model()
 CORS(app, headers=['Content-Type'])
 
-@app.route("/", methods=["POST", "GET", 'OPTIONS'])
+@app.route("/index", methods=["POST", "GET", 'OPTIONS'])
 def index_page():
 	return render_template('index.html')
 	
