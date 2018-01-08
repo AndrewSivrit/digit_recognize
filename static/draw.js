@@ -1,4 +1,4 @@
-//for canvas drawing used code from here: https://github.com/zealerww/digits_recognition/blob/master/digits_recognition/static/draw.js
+
 var drawing = false;
 
 var context;
