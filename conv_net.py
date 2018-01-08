@@ -1,3 +1,5 @@
+__author__ = 'AndrewSivrit'
+
 import numpy as np
 import boto
 import boto3
