@@ -18,10 +18,6 @@ import boto3
 from boto.s3.key import Key
 from boto.s3.connection import S3Connection
 
-#start_time = time.time()
-#classifier = SentimentClassifier()
-
-
 def get_image():
 	image_b64 = request.values['imageBase64']
 	image_encoded = image_b64.split(',')[1]
@@ -34,14 +30,10 @@ def get_image():
 		f.write(image)
 
 	REGION_HOST = 's3-external-1.amazonaws.com'
-	#S3_BUCKET = os.environ.get('S3_BUCKET')
-	#AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-	#AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-	#conn = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, host=REGION_HOST)
-	#conn = S3Connection(os.environ['AWS_ACCESS_KEY_ID'], os.environ['AWS_SECRET_ACCESS_KEY'], host=REGION_HOST)
+
 	conn = S3Connection(os.environ['AWSAccessKeyId'], os.environ['AWSSecretKey'], host=REGION_HOST)
 	bucket = conn.get_bucket('nikitinandrews')
-	#print(bucket, os.environ['AWS_ACCESS_KEY_ID'], os.environ['AWS_SECRET_ACCESS_KEY'])
+
 	k = Key(bucket)
 	key = filename
 	fn = 'tmp/' + filename
