@@ -1,0 +1,140 @@
+[XILINX DRIVERS INFO:]
+--------------------------------------------------------------------------------
+original drivers
+---
+git clone https://github.com/Xilinx/dma_ip_drivers.git
+cd XDMA/linux-kernel/xdma
+
+kernel sources are here:
+---
+/opt/ti-processor-sdk-linux-am65xx-evm-06.03.00.106/board-support/linux-4.19.94+gitAUTOINC+be5389fd85-gbe5389fd85
+
+toolchain is here:
+---
+  
+
+CROSS_COMPILE prefix 
+---
+aarch64-linux-gnu-
+
+according kernel ARCH
+---
+arm64
+
+
+[BUILD XILINX XDMA DRIVER]:
+--------------------------------------------------------------------------------
+1. Dl modified kernel driver sources and switch to needed branch
+---
+git clone https://github.com/repu1sion/xilinx_xdma.git
+git checkout pulse
+
+2. Set path for toolchain
+---
+export PATH=/home/celeriroot/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin:$PATH
+
+3. Prepare kernel sources to build modules
+---
+# When performing cross compilation for other architectures ARCH shall be set
+# to the target architecture. (See arch/* for the possibilities).
+# ARCH can be set during invocation of make:
+# make ARCH=ia64
+# Another way is to have ARCH set in the environment.
+# The default ARCH is the host where make is executed.
+
+# CROSS_COMPILE specify the prefix used for all executables used
+# during compilation. Only gcc and related bin-utils executables
+# are prefixed with $(CROSS_COMPILE).
+# CROSS_COMPILE can be set on the command line
+# make CROSS_COMPILE=ia64-linux-
+# Alternatively CROSS_COMPILE can be set in the environment.
+# Default value for CROSS_COMPILE is not to prefix executables
+
+3.0. Install prereqs to build linux kernel on ubuntu 18.04 LTS
+---
+# sudo apt-get install libncurses-dev flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
+
+3.1 set CROSS_COMPILE and ARCH env variables
+---
+!!! We build kernel as common user, without sudo, because we setup env variables for common
+user only, and not for root
+
+# cd /opt/ti-processor-sdk-linux-am65xx-evm-06.03.00.106/board-support/
+# sudo chown -R celeriroot:celeriroot linux-4.19.94+gitAUTOINC+be5389fd85-gbe5389fd85/
+# export CROSS_COMPILE=aarch64-linux-gnu-
+# export ARCH=arm64
+
+3.2 prepare kernel (make oldconfig && make prepare)
+---
+!!! We need to setup kernel with proper config, it's needed to avoid vermagic errors when inserting module
+
+# cd linux-4.19.94+gitAUTOINC+be5389fd85-gbe5389fd85/
+# cp arch/arm64/configs/tisdk_am65xx-evm_defconfig .config
+# make oldconfig						- (on any questions just press Enter to use default values)
+# make prepare
+# make scripts
+
+4. Build modules
+---
+# cd /home/celeriroot/andrii/dma_ip_drivers/XDMA/linux-kernel/xdma/
+# make
+
+4.1 check resulted module with modinfo:
+---
+# modinfo ./xdma.ko
+
+5. upload
+---
+# scp xdma.ko root@192.168.1.15:/root
+# ssh root@192.168.1.15
+
+6. insert module
+---
+# cd /root
+# insmod ./xdma.ko
+
+7. check output with dmesg
+---
+# dmesg | tail
+
+output:
+---
+[83387.040836] xdma: no symbol version for module_layout
+[83387.054358] xdma:xdma_mod_init: Xilinx XDMA Reference Driver xdma v2019.2.51
+[83387.061464] xdma:xdma_mod_init: desc_blen_max: 0xfffffff/268435455, sgdma_timeout: 10 sec.
+[83387.069893] xdma:xdma_threads_create: xdma_threads_create
+
+
+[FAST DRIVER REBUILD:]
+--------------------------------------------------------------------------------
+In case all kernel setup is done and you need just rebuild and upload driver
+fast with some small changes it could be done in 2 commands:
+
+# cd /home/celeriroot/andrii/dma_ip_drivers/XDMA/linux-kernel/xdma/
+# ./build.sh && ./install.sh
+
+
+[NOTES:]
+--------------------------------------------------------------------------------
+1. In driver Makefile changed BUILDSYSTEM_DIR to cross-compile against ti arm kernel,
+not default ubuntu one. In case rebuild would be done on some another machine,
+please check SDK is in opt and kernel version is same or edit hardcoded Makefile
+manually
+
+#BUILDSYSTEM_DIR:=/lib/modules/$(shell uname -r)/build
+BUILDSYSTEM_DIR:=/opt/ti-processor-sdk-linux-am65xx-evm-06.03.00.106/board-support/linux-4.19.94+gitAUTOINC+be5389fd85-gbe5389fd85
+
+2. If insmod fails to load kernel module - check dmesg output.
+If it says about magic mismatch - check that kernel sources configured with proper ti config, not default one
+cp arch/arm64/configs/tisdk_am65xx-evm_defconfig .config
+
+
+dmesg output example - wrong vermagic:
+---
+xdma: version magic '4.19.94+ SMP mod_unload aarch64' should be '4.19.94-gbe5389fd85 SMP preempt mod_unload modversions aarch64'
+
+
+things which could help to fight with module version mismatch (if no ti kernel config available):
+-----
+1. edit linux kernel Makefile EXTRAVERSION etc
+2. OR find try to load with modprobe --force to ignore vermagic mismatch
