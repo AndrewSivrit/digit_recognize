@@ -1,0 +1,19 @@
+Iceberg vs ship
+1. https://github.com/Angelo1211/Statoil-Project
+
+Weather
+2. https://github.com/hydrogo/rainnet
+
+ADAS 
+3. https://github.com/yizhou-wang/RODNet
+
+Ship detection and classificatuion
+4. https://github.com/rugg2/ship_detection
+5. https://core.ac.uk/download/pdf/132839499.pdf
+ROI Preprocc
+CNN Classification model
+
+6. https://www.google.ru/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjVwb_Z9bTvAhWSlosKHbHqASMQFjAEegQIARAD&url=https%3A%2F%2Fwww.mdpi.com%2F2072-4292%2F11%2F10%2F1206%2Fpdf-vor&usg=AOvVaw2I6Zcd60xAkXCw6Nb53lOk
+
+
+Spectrogramms ? 
